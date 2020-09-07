@@ -13,16 +13,17 @@ RUN apt-get update && \
 
 EXPOSE 19132/udp
 
-USER 1001:1001
+#USER 1001:1001
 
 VOLUME ["/data"]
 
 WORKDIR /data
 
-ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+# ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+ENTRYPOINT ["/opt/bedrock-entry.sh"]
 
 ARG EASY_ADD_VERSION=0.7.0
-ADD --chown=1001:1001 https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
+ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
 RUN chmod +x /usr/local/bin/easy-add
 
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
@@ -33,9 +34,9 @@ RUN easy-add --var version=1.2.0 --var app=restify --file {{.app}} --from https:
 
 RUN easy-add --var version=0.5.0 --var app=mc-monitor --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
 
-COPY  --chown=1001:1001 *.sh /opt/
+COPY   *.sh /opt/
 
-COPY  --chown=1001:1001 property-definitions.json /etc/bds-property-definitions.json
+COPY   property-definitions.json /etc/bds-property-definitions.json
 
 # Available versions listed at
 # https://minecraft.gamepedia.com/Bedrock_Edition_1.11.0
