@@ -20,7 +20,8 @@ VOLUME ["/data"]
 WORKDIR /data
 
 # ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
-ENTRYPOINT ["/opt/bedrock-entry.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+#ENTRYPOINT ["/opt/bedrock-entry.sh"]
 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
